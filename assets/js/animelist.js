@@ -17,13 +17,13 @@ function getCurrentAnime() {
 
 // Get Top Anime information using Jikan API call
 function getTopAnime() {
-  let apiUrl = "https://api.jikan.moe/v3/top/anime";
+  let apiUrl = "https://api.jikan.moe/v4/top/anime";
 
   fetch(apiUrl).then(function (response) {
     if(response.ok) {
       response.json().then(function (data) {
         // Display top anime to the dom
-        displayAnimeList(data.top,$("#top-anime-list"),10);
+        displayAnimeList(data.data,$("#top-anime-list"),10);
       })
     }
     else {
