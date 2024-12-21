@@ -1,12 +1,12 @@
 // Get Current Anime information using Jikan API call
 function getCurrentAnime() {
-  let apiUrl = "https://api.jikan.moe/v3/season/2022/spring";
+  let apiUrl = "https://api.jikan.moe/v4/seasons/now";
 
   fetch(apiUrl).then(function (response) {
     if(response.ok) {
       response.json().then(function (data) {
         // Display current anime to the dom
-        displayAnimeList(data.anime,$("#current-airing-list"),10);
+        displayAnimeList(data.data,$("#current-airing-list"),10);
       })
     }
     else {
@@ -46,7 +46,7 @@ function displayAnimeList(data,animeList,num) {
     cardInfo.setAttribute("class","card-content");
     cardInfo.style.padding = "5px";
     let cardImg = document.createElement("img");
-    cardImg.setAttribute("src",data[i].image_url);
+    cardImg.setAttribute("src",data[i].images.jpg.image_url);
     let cardTitle = document.createElement("span");
     cardTitle.setAttribute("class","card-title");
     cardTitle.textContent = data[i].title;
