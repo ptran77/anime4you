@@ -5,20 +5,19 @@ var mangaCheck = false;
 
 function searchAnime(anime) {
   // API call 
-  var apiUrl =  "https://api.jikan.moe/v3/search/anime?q=" + anime + "&page=1"
+  var apiUrl =  "https://api.jikan.moe/v4/anime?q=" + anime + "&page=1"
 // API fetch
   fetch(apiUrl).then(function(response) {
     $("#load-info").removeClass("display-off");
     $("#anime-modal-info").addClass("display-off");
     if(response.ok){
       response.json().then(function(data){
-        // console.log(data);
           // below is the jQuery that adds the modal displaying the info from the jikan API
         $("#noAnime").addClass("display-off");
 
-        $("#animeTitle").text(data.results[0].title);
-        $("#synopsis").text(data.results[0].synopsis);
-        $("#animeImg").attr("src", data.results[0].image_url);
+        $("#animeTitle").text(data.data[0].titles[0].title);
+        $("#synopsis").text(data.data[0].synopsis);
+        $("#animeImg").attr("src", data.data[0].images.jpg.image_url);
         $("#add-anime").removeClass("display-off");
         
         $("#load-info").addClass("display-off");
@@ -36,7 +35,7 @@ function searchAnime(anime) {
         $("#no-recommended").addClass("display-off");
         $("#recommend-section").addClass("display-off");
 
-        gotManga(data.results[0].title);
+        gotManga(data.data[0].titles[0].title);
         animeRecommender(anime);
         })
     } else {
@@ -59,13 +58,13 @@ function searchAnime(anime) {
     
 // filters throgh anime's info to see if there is a manga as  well
 function gotManga(name) {    
-  var apiUrl =  "https://api.jikan.moe/v3/search/manga?q=" + name + "&page=1";
+  var apiUrl =  "https://api.jikan.moe/v4/manga?q=" + name + "&page=1";
       
   fetch(apiUrl).then(function(response) {
     if(response.ok){
-      response.json().then(function(data){
+      response.json().then(function (data) {
 
-      if (data.results.length > 0) {
+      if (data.data.length > 0) {
         $("#manga").text("Has a manga")
       } else {
         $("#manga").text("Does not have Manga");
