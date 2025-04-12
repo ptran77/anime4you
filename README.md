@@ -113,4 +113,4 @@ Users are allowed to make their own watchlist. They can either add or remove ani
 
 ## Page Link
 
-Link: https://diegorivera1110.github.io/anime4you/
+Link: [https://ptran77.github.io/anime4you/](https://ptran77.github.io/anime4you/)
