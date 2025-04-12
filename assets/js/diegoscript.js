@@ -36,7 +36,7 @@ function searchAnime(anime) {
         $("#recommend-section").addClass("display-off");
 
         gotManga(data.data[0].titles[0].title);
-        animeRecommender(anime);
+        animeRecommender(data.data[0].mal_id);
         })
     } else {
       $("#animeTitle").text("");
@@ -79,10 +79,10 @@ function gotManga(name) {
 };
 
 function displayRecommended(animeList) {
-  // console.log(animeList);
   let reclist = $("#recommendation-list");
   reclist.text("")
   for (let i = 0; i < 3; i++) {
+
 
     let animeCard = document.createElement("div");
     animeCard.setAttribute("class","card orange lighten-4");
@@ -90,10 +90,10 @@ function displayRecommended(animeList) {
     cardInfo.setAttribute("class","card-content");
     cardInfo.style.padding = "5px";
     let cardImg = document.createElement("img");
-    cardImg.setAttribute("src",animeList.data[i].coverImage.large);
+    cardImg.setAttribute("src", animeList[i].entry.images.jpg.image_url);
     let cardTitle = document.createElement("span");
     cardTitle.setAttribute("class","card-title");
-    cardTitle.textContent = animeList.data[i].title.english;
+    cardTitle.textContent = animeList[i].entry.title;
     cardInfo.appendChild(cardImg);
     cardInfo.appendChild(cardTitle);
     animeCard.appendChild(cardInfo);
@@ -106,28 +106,20 @@ function displayRecommended(animeList) {
 
 
 function animeRecommender(title) {
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Host': 'anime-recommender.p.rapidapi.com',
-      'X-RapidAPI-Key': '8f3a80d81dmsh343478cdfc5c7dfp1d7768jsncfbd4adb9453'
-    }
-  }
-  // api call from the anime recommender api displaying only 3
-  var apiCall = 'https://anime-recommender.p.rapidapi.com/?anime_title=' + title + '&number_of_anime=3';
+  // api call to the jikan recommender
+  var apiCall = 'https://api.jikan.moe/v4/anime/' + title + '/recommendations';
  
-  fetch(apiCall, options).then(function(response) {
+  fetch(apiCall).then(function(response) {
     if(response.ok) {
-      response.json().then(function(data) {
-        // console.log(data);
+      response.json().then(function (data) {
 
-        if (data.data == "Anime Not Found") {
+        if (data.data.length == 0) {
            
           $("#load-recommend").addClass("display-off");
           $("#no-recommended").removeClass("display-off")
         } else {
              
-          displayRecommended(data);
+          displayRecommended(data.data);
           $("#load-recommend").addClass("display-off");
           $("#recommend-section").removeClass("display-off")
         }

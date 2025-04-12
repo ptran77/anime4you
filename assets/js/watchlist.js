@@ -3,7 +3,6 @@ let savedAnime = [];
 
 function addToWatchList(aName) {
   // Create a Watch List Item
-  console.log(aName);
   let watchListItem = document.createElement("li");
 
   let itemInfo = document.createElement("div");

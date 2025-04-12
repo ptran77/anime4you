@@ -1,8 +1,6 @@
 // function to list of anime of a genre using Jikan API
 function getGenre(genreId){
     let apiUrl = "https://api.jikan.moe/v4/anime?genres=" + genreId;
-    console.log(genreId);
-    console.log(apiUrl);
     
     fetch(apiUrl).then(function(response){
         if(response.ok){
