@@ -1,15 +1,18 @@
 // function to list of anime of a genre using Jikan API
 function getGenre(genreId){
-    let apiUrl = "https://api.jikan.moe/v3/genre/anime/"+ genreId + "/1";
+    let apiUrl = "https://api.jikan.moe/v4/anime?genres=" + genreId;
+    console.log(genreId);
+    console.log(apiUrl);
     
     fetch(apiUrl).then(function(response){
         if(response.ok){
-            response.json().then(function(data){
+            response.json().then(function (data) {
 
                 // clear genre list
                 $("#genre-list").text("");
+                console.log(data.data);
                 // display anime to genre list
-                displayAnimeList(data.anime,$("#genre-list"),10);
+                displayAnimeList(data.data,$("#genre-list"),10);
             })
         }
     })
